@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require_relative "../../lib/template"
+
+Template::Bin.parse(
+  name: "value",
+  parser: Template::Value::Parser,
+  argv: ARGV
+)

@@ -19,7 +19,7 @@ class Template
           double_quote.ignore
       end
       rule(:string) do
-        (single_quoted_string | double_quoted_string).as(:string)
+        single_quoted_string | double_quoted_string
       end
       root(:string)
     end

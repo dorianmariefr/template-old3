@@ -5,6 +5,7 @@ require_relative "template/nothing"
 require_relative "template/boolean"
 require_relative "template/string"
 require_relative "template/number"
+require_relative "template/value"
 
 require_relative "template/bin"
 

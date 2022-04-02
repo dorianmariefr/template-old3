@@ -6,13 +6,13 @@ RSpec.describe Template::Boolean::Parser do
   context "\"true\"" do
     let(:input) { "true" }
 
-    it { is_expected.to eq(boolean: "true") }
+    it { is_expected.to eq("true") }
   end
 
   context "\"false\"" do
     let(:input) { "false" }
 
-    it { is_expected.to eq(boolean: "false") }
+    it { is_expected.to eq("false") }
   end
 
   context "\"\"" do
