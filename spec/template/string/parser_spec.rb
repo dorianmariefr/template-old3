@@ -9,8 +9,8 @@ RSpec.describe Template::String::Parser do
     it { is_expected.to eq(string: "hello") }
   end
 
-  context '""hello""' do
-    let(:input) { '"hello"' }
+  context "\"\"hello\"\"" do
+    let(:input) { "\"hello\"" }
 
     it { is_expected.to eq(string: "hello") }
   end
@@ -27,13 +27,13 @@ RSpec.describe Template::String::Parser do
     it { is_expected.to eq(string: 'new\nline') }
   end
 
-  context '""' do
+  context "\"\"" do
     let(:input) { "" }
 
     it { expect { subject }.to raise_error(Parslet::ParseFailed) }
   end
 
-  context '"something else"' do
+  context "\"something else\"" do
     let(:input) { "something else" }
 
     it { expect { subject }.to raise_error(Parslet::ParseFailed) }

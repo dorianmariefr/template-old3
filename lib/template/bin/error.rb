@@ -23,7 +23,7 @@ class Template
 
         puts prefix + message
         puts prefix + source
-        puts prefix + ' ' * pos + '^'
+        puts prefix + " " * pos + "^"
       end
 
       def pos
@@ -48,7 +48,7 @@ class Template
       end
 
       def prefix
-        trace ? '  ' * index : ''
+        trace ? "  " * index : ""
       end
 
       def message

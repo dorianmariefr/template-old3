@@ -34,11 +34,7 @@ class Template
       end
 
       def source
-        if File.exists?(argv[0])
-          File.read(argv[0])
-        else
-          argv[0]
-        end
+        File.exists?(argv[0]) ? File.read(argv[0]) : argv[0]
       end
 
       def trace?
