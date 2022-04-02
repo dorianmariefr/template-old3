@@ -14,8 +14,10 @@ class Template
 
       rule(:list) do
         left_square_bracket.ignore >>
-          (value.as(:first) >> (comma >> value).repeat(1).as(:others).maybe)
-            .maybe >> right_square_bracket.ignore
+          (
+            value.as(:first) >> (comma >> value).repeat(1).as(:others).maybe >>
+              comma.maybe
+          ).maybe >> right_square_bracket.ignore
       end
 
       root(:list)

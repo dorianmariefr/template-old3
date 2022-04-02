@@ -1,12 +1,15 @@
 require "parslet"
 require "parslet/convenience"
 
+require_relative "template/name"
+
 require_relative "template/nothing"
 require_relative "template/boolean"
 require_relative "template/string"
 require_relative "template/number"
 require_relative "template/value"
 require_relative "template/list"
+require_relative "template/dictionnary"
 
 require_relative "template/bin"
 

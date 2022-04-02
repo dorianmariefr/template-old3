@@ -10,18 +10,15 @@ RSpec.describe Template::Value::Parser do
     { input: "'hello'", output: { string: "hello" } },
     { input: "[true]", output: { list: { first: { boolean: "true" } } } },
     {
-      input: "[[[true]]]",
+      input: "{a:true}",
       output: {
-        list: {
+        dictionnary: {
           first: {
-            list: {
-              first: {
-                list: {
-                  first: {
-                    boolean: "true"
-                  }
-                }
-              }
+            key: {
+              string: "a"
+            },
+            value: {
+              boolean: "true"
             }
           }
         }

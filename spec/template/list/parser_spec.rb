@@ -29,6 +29,24 @@ RSpec.describe Template::Value::Parser do
           others: [{ boolean: "false" }]
         }
       }
+    },
+    {
+      input: "[[[true]]]",
+      output: {
+        list: {
+          first: {
+            list: {
+              first: {
+                list: {
+                  first: {
+                    boolean: "true"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   ].each do |spec|
     context spec[:input].inspect do
