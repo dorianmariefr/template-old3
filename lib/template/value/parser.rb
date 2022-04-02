@@ -5,11 +5,10 @@ class Template
       rule(:boolean) { Template::Boolean::Parser.new }
       rule(:number) { Template::Number::Parser.new }
       rule(:string) { Template::String::Parser.new }
+      rule(:list) { Template::List::Parser.new }
       rule(:value) do
-        nothing.as(:nothing) |
-          boolean.as(:boolean) |
-          number.as(:number) |
-          string.as(:string)
+        nothing.as(:nothing) | boolean.as(:boolean) | number.as(:number) |
+          string.as(:string) | list.as(:list)
       end
       root(:value)
     end

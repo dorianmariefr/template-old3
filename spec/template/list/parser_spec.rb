@@ -4,26 +4,29 @@ RSpec.describe Template::Value::Parser do
   subject { described_class.new.parse(input) }
 
   [
-    { input: "1", output: { number: { base_10: { whole: "1" } } } },
-    { input: "true", output: { boolean: "true" } },
-    { input: "nothing", output: { nothing: "nothing" } },
-    { input: "'hello'", output: { string: "hello" } },
-    { input: "[true]", output: { list: { first: { boolean: "true" } } } },
+    { input: "[]", output: { list: "" } },
     {
-      input: "[[[true]]]",
+      input: "[1]",
       output: {
         list: {
           first: {
-            list: {
-              first: {
-                list: {
-                  first: {
-                    boolean: "true"
-                  }
-                }
+            number: {
+              base_10: {
+                whole: "1"
               }
             }
           }
+        }
+      }
+    },
+    {
+      input: "[true, false]",
+      output: {
+        list: {
+          first: {
+            boolean: "true"
+          },
+          others: [{ boolean: "false" }]
         }
       }
     }
