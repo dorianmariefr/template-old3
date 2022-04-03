@@ -245,7 +245,13 @@ class Parslet::Atoms::Infix < Parslet::Atoms::Base
   def initialize(element, operations, &reducer); end
   def match_operation(source, context, consume_all); end
   def operations; end
-  def precedence_climb(source, context, consume_all, current_prec = nil, needs_element = nil); end
+  def precedence_climb(
+    source,
+    context,
+    consume_all,
+    current_prec = nil,
+    needs_element = nil
+  ); end
   def produce_tree(ary); end
   def reducer; end
   def to_s_inner(prec); end
