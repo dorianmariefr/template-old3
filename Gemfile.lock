@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.5.0)
+    optparse (0.2.0)
     parslet (2.0.0)
     rspec (3.11.0)
       rspec-core (~> 3.11.0)
@@ -16,13 +17,20 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.11.0)
     rspec-support (3.11.0)
+    sorbet (0.5.9837)
+      sorbet-static (= 0.5.9837)
+    sorbet-runtime (0.5.9837)
+    sorbet-static (0.5.9837-universal-darwin-21)
 
 PLATFORMS
   x86_64-darwin-21
 
 DEPENDENCIES
+  optparse
   parslet
   rspec
+  sorbet
+  sorbet-runtime
 
 BUNDLED WITH
    2.3.7

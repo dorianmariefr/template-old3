@@ -1,3 +1,4 @@
+# typed: strict
 require "optparse"
 require "parslet"
 require "parslet/convenience"

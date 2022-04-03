@@ -1,3 +1,4 @@
+# typed: true
 class Template
   class Bin
     class Parse

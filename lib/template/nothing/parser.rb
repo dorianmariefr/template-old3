@@ -1,3 +1,4 @@
+# typed: false
 class Template
   class Nothing
     class Parser < Parslet::Parser

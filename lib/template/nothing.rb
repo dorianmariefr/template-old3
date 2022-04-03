@@ -1,3 +1,4 @@
+# typed: true
 require_relative "nothing/parser"
 
 class Template

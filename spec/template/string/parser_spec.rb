@@ -1,3 +1,4 @@
+# typed: false
 require "spec_helper"
 
 RSpec.describe Template::String::Parser do

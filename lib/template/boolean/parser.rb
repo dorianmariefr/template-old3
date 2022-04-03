@@ -1,3 +1,4 @@
+# typed: false
 class Template
   class Boolean
     class Parser < Parslet::Parser
