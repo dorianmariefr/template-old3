@@ -6,7 +6,7 @@ RSpec.describe Template::Name::Parser do
   [
     { input: "a", output: "a" },
     { input: "hello", output: "hello" },
-    { input: "with_underscore", output: "with_underscore" },
+    { input: "with_underscore", output: "with_underscore" }
   ].each do |spec|
     context spec[:input].inspect do
       let(:input) { spec[:input] }

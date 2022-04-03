@@ -89,7 +89,7 @@ RSpec.describe Template::Dictionnary::Parser do
     context spec[:input].inspect do
       let(:input) { spec[:input] }
 
-      it { is_expected.to eq(spec[:output]) }
+      it { is_expected.to eq(dictionnary: spec[:output]) }
     end
   end
 

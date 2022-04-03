@@ -1,15 +1,22 @@
 class Template
   class Bin
-    class Parse
+    class Evaluate
       MIN = 1
       MAX = 2
       TRACE = "--trace"
 
-      def initialize(name:, parser:, argv:)
+      def initialize(name:, evaluator:, parser:, argv:)
         @name = name
+        @evaluator = evaluator
         @parser = parser
         @argv = argv
       end
+
+      def evaluate
+        pp evaluator.new(parse).evaluate
+      end
+
+      private
 
       def parse
         if argv.size < MIN || argv.size > MAX
@@ -18,7 +25,7 @@ class Template
           usage
         else
           begin
-            pp parser.new.parse(source)
+            parser.new.parse(source)
           rescue Parslet::ParseFailed => error
             Template::Bin::Error.print(error, trace: trace?)
             abort
@@ -26,12 +33,10 @@ class Template
         end
       end
 
-      private
-
-      attr_reader :name, :parser, :argv
+      attr_reader :name, :evaluator, :parser, :argv
 
       def usage
-        puts "USAGE: bin/#{name}/parse INPUT [#{TRACE}]"
+        puts "USAGE: bin/#{name}/evaluator INPUT [#{TRACE}]"
         abort
       end
 

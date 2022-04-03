@@ -1,6 +1,7 @@
 class Template
   class Name
     class Parser < Parslet::Parser
+      rule(:number_sign) { str("#") }
       rule(:single_quote) { str("'") }
       rule(:double_quote) { str("\"") }
       rule(:backslash) { str('\\') }
@@ -21,9 +22,10 @@ class Template
       rule(:false_keyword) { str("false") }
 
       rule(:special_character) do
-        single_quote | double_quote | backslash | left_square_bracket |
-          right_square_bracket | left_curly_bracket | right_curly_bracket |
-          comma | colon | equal | left_carret | right_carret | space | newline
+        number_sign | single_quote | double_quote | backslash |
+          left_square_bracket | right_square_bracket | left_curly_bracket |
+          right_curly_bracket | comma | colon | equal | left_carret |
+          right_carret | space | newline
       end
 
       rule(:keyword) { nothing_keyword | true_keyword | false_keyword }

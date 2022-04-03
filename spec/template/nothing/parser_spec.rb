@@ -6,7 +6,7 @@ RSpec.describe Template::Nothing::Parser do
   context "\"nothing\"" do
     let(:input) { "nothing" }
 
-    it { is_expected.to eq("nothing") }
+    it { is_expected.to eq(nothing: "nothing") }
   end
 
   context "\"\"" do

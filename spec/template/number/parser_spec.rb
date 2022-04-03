@@ -13,8 +13,10 @@ RSpec.describe Template::Number::Parser do
         base_10: {
           decimal: "2",
           exponent: {
-            base_10: {
-              whole: "1"
+            number: {
+              base_10: {
+                whole: "1"
+              }
             }
           }
         }
@@ -27,8 +29,10 @@ RSpec.describe Template::Number::Parser do
         base_10: {
           whole: "2",
           exponent: {
-            base_10: {
-              whole: "1"
+            number: {
+              base_10: {
+                whole: "1"
+              }
             }
           }
         }
@@ -41,7 +45,7 @@ RSpec.describe Template::Number::Parser do
     context spec[:input].inspect do
       let(:input) { spec[:input] }
 
-      it { is_expected.to eq(spec[:output]) }
+      it { is_expected.to eq(number: spec[:output]) }
     end
   end
 

@@ -18,7 +18,9 @@ class Template
         double_quote.ignore >> double_quoted_character.repeat(0) >>
           double_quote.ignore
       end
-      rule(:string) { single_quoted_string | double_quoted_string }
+      rule(:string) do
+        (single_quoted_string | double_quoted_string).as(:string)
+      end
       root(:string)
     end
   end

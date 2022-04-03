@@ -6,25 +6,25 @@ RSpec.describe Template::String::Parser do
   context '"\'hello\'"' do
     let(:input) { "'hello'" }
 
-    it { is_expected.to eq("hello") }
+    it { is_expected.to eq(string: "hello") }
   end
 
   context "\"\"hello\"\"" do
     let(:input) { "\"hello\"" }
 
-    it { is_expected.to eq("hello") }
+    it { is_expected.to eq(string: "hello") }
   end
 
   context '""new\nline""' do
     let(:input) { '"new\nline"' }
 
-    it { is_expected.to eq('new\nline') }
+    it { is_expected.to eq(string: 'new\nline') }
   end
 
   context '"\'new\nline\'"' do
     let(:input) { "'new\\nline'" }
 
-    it { is_expected.to eq('new\nline') }
+    it { is_expected.to eq(string: 'new\nline') }
   end
 
   context "\"\"" do

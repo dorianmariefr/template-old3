@@ -9,9 +9,8 @@ class Template
       rule(:list) { Template::List::Parser.new }
       rule(:name) { Template::Name::Parser.new }
       rule(:value) do
-        nothing.as(:nothing) | boolean.as(:boolean) | number.as(:number) |
-          string.as(:string) | dictionnary.as(:dictionnary) | list.as(:list) |
-          name.as(:name)
+        nothing | boolean | number | string | dictionnary | list |
+          name.as(:call)
       end
       root(:value)
     end

@@ -22,11 +22,13 @@ class Template
       end
 
       rule(:dictionnary) do
-        left_curly_bracket.ignore >>
-          (
-            key_value.as(:first) >>
-              (comma >> key_value).repeat(1).as(:others).maybe >> comma.maybe
-          ).maybe >> right_curly_bracket.ignore
+        (
+          left_curly_bracket.ignore >>
+            (
+              key_value.as(:first) >>
+                (comma >> key_value).repeat(1).as(:others).maybe >> comma.maybe
+            ).maybe >> right_curly_bracket.ignore
+        ).as(:dictionnary)
       end
 
       root(:dictionnary)

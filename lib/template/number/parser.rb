@@ -70,12 +70,14 @@ class Template
 
       # number
       rule(:number) do
-        (minus | plus).as(:sign).maybe >>
-          (
-            infinity.as(:infinity) | base_16_number.as(:base_16) |
-              base_8_number.as(:base_8) | base_2_number.as(:base_2) |
-              base_10_number.as(:base_10)
-          )
+        (
+          (minus | plus).as(:sign).maybe >>
+            (
+              infinity.as(:infinity) | base_16_number.as(:base_16) |
+                base_8_number.as(:base_8) | base_2_number.as(:base_2) |
+                base_10_number.as(:base_10)
+            )
+        ).as(:number)
       end
 
       root(:number)

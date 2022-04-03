@@ -4,16 +4,14 @@ RSpec.describe Template::Value::Parser do
   subject { described_class.new.parse(input) }
 
   [
-    { input: "[]", output: { list: "" } },
+    { input: "[]", output: "" },
     {
       input: "[1]",
       output: {
-        list: {
-          first: {
-            number: {
-              base_10: {
-                whole: "1"
-              }
+        first: {
+          number: {
+            base_10: {
+              whole: "1"
             }
           }
         }
@@ -22,25 +20,21 @@ RSpec.describe Template::Value::Parser do
     {
       input: "[true, false]",
       output: {
-        list: {
-          first: {
-            boolean: "true"
-          },
-          others: [{ boolean: "false" }]
-        }
+        first: {
+          boolean: "true"
+        },
+        others: [{ boolean: "false" }]
       }
     },
     {
       input: "[[[true]]]",
       output: {
-        list: {
-          first: {
-            list: {
-              first: {
-                list: {
-                  first: {
-                    boolean: "true"
-                  }
+        first: {
+          list: {
+            first: {
+              list: {
+                first: {
+                  boolean: "true"
                 }
               }
             }
@@ -52,7 +46,7 @@ RSpec.describe Template::Value::Parser do
     context spec[:input].inspect do
       let(:input) { spec[:input] }
 
-      it { is_expected.to eq(spec[:output]) }
+      it { is_expected.to eq(list: spec[:output]) }
     end
   end
 

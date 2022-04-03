@@ -15,18 +15,24 @@ class Template
       end
 
       def max_child
-        tree.flatten.max_by(&:pos)
+        tree.flatten.max_by(&:position)
       end
 
       def print
         parent.print if parent && trace?
 
-        puts prefix + message
-        puts prefix + source
-        puts prefix + " " * pos + "^"
+        puts "#{prefix}#{message}"
+
+        if lines.size > 1
+          puts "#{prefix}#{line_number}: #{line_source}"
+          puts "#{prefix}#{" " * line_number.to_s.size}  #{" " * line_position}^"
+        else
+          puts "#{prefix}#{line_source}"
+          puts "#{prefix}#{" " * line_position}^"
+        end
       end
 
-      def pos
+      def position
         exception.pos.charpos
       end
 
@@ -53,6 +59,26 @@ class Template
 
       def message
         exception.message.to_s
+      end
+
+      def line_index
+        source[0...position].count("\n")
+      end
+
+      def line_number
+        line_index + 1
+      end
+
+      def lines
+        source.lines
+      end
+
+      def line_source
+        lines[line_index]
+      end
+
+      def line_position
+        position - lines[0...line_index].map(&:size).sum
       end
 
       def source

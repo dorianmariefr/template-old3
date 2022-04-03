@@ -1,9 +1,0 @@
-#!/usr/bin/env ruby
-
-require_relative "../../lib/template"
-
-Template::Bin.parse(
-  name: "dictionnary",
-  parser: Template::Dictionnary::Parser,
-  argv: ARGV
-)
