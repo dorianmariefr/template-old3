@@ -4,11 +4,13 @@ class Template
       rule(:single_quote) { str("'") }
       rule(:double_quote) { str("\"") }
       rule(:backslash) { str('\\') }
+      rule(:n) { str("n") }
+      rule(:escaped_character) { backslash >> (n | single_quote | double_quote) }
       rule(:single_quoted_character) do
-        (backslash >> any) | (single_quote.absent? >> any)
+        escaped_character | (single_quote.absent? >> backslash.absent? >> any)
       end
       rule(:double_quoted_character) do
-        (backslash >> any) | (double_quote.absent? >> any)
+        escaped_character | (double_quote.absent? >> backslash.absent? >> any)
       end
       rule(:single_quoted_string) do
         single_quote.ignore >> single_quoted_character.repeat(0) >>

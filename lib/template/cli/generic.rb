@@ -1,6 +1,18 @@
 class Template
   class Cli < Thor
     class Generic < Thor
+      def self.key
+        raise NotImplementedError
+      end
+
+      def self.base
+        raise NotImplementedError
+      end
+
+      def self.parser
+        raise NotImplementedError
+      end
+
       def self.parse(source, options)
         parser.new.parse(source)
       rescue ::Parslet::ParseFailed => error
@@ -9,7 +21,9 @@ class Template
       end
 
       def self.transform(source, options)
-        base.new(parse(source, options).fetch(key))
+        parsed = parse(source, options)
+        parsed = parsed.fetch(key) if key
+        base.new(parsed)
       end
 
       desc "parse SOURCE", "parses source into ruby hash"
@@ -17,8 +31,6 @@ class Template
       def parse(source)
         pp self.class.parse(source, options)
       end
-      map "p" => :parse
-      map "pa" => :parse
 
       desc(
         "evaluate SOURCE",
@@ -29,9 +41,6 @@ class Template
       def evaluate(source)
         pp self.class.transform(source, options).evaluate
       end
-      map "e" => :evaluate
-      map "ev" => :evaluate
-      map "eval" => :evaluate
 
       desc(
         "render SOURCE",
@@ -40,10 +49,9 @@ class Template
       option :verbose, type: :boolean, default: false, aliases: "-v"
       option :context, type: :string, default: "", aliases: "-c"
       def render(source)
-        puts self.class.transform(source, options).render
+        print self.class.transform(source, options).render
+        puts
       end
-      map "r" => :render
-      map "re" => :render
     end
   end
 end

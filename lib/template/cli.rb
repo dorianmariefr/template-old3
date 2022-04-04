@@ -1,9 +1,12 @@
 require_relative "cli/generic"
 
-require_relative "cli/nothing"
 require_relative "cli/boolean"
-require_relative "cli/string"
+require_relative "cli/dictionnary"
+require_relative "cli/list"
+require_relative "cli/nothing"
 require_relative "cli/number"
+require_relative "cli/string"
+require_relative "cli/value"
 
 class Template
   class Cli < Thor
@@ -13,20 +16,23 @@ class Template
 
     desc "nothing SUBCOMMAND ..ARGS", "nothings's language"
     subcommand :nothing, Template::Cli::Nothing
-    map "no" => :nothing
 
     desc "boolean SUBCOMMAND ..ARGS", "boolean's language"
     subcommand :boolean, Template::Cli::Boolean
-    map "b" => :boolean
-    map "bo" => :boolean
 
     desc "string SUBCOMMAND ..ARGS", "string's language"
     subcommand :string, Template::Cli::String
-    map "s" => :string
-    map "st" => :string
 
     desc "number SUBCOMMAND ..ARGS", "number's language"
     subcommand :number, Template::Cli::Number
-    map "nu" => :number
+
+    desc "list SUBCOMMAND ..ARGS", "list's language"
+    subcommand :list, Template::Cli::List
+
+    desc "dictionnary SUBCOMMAND ..ARGS", "list's language"
+    subcommand :dictionnary, Template::Cli::Dictionnary
+
+    desc "value SUBCOMMAND ..ARGS", "value's language"
+    subcommand :value, Template::Cli::Value
   end
 end
