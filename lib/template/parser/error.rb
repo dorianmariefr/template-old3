@@ -1,6 +1,6 @@
 # typed: false
 class Template
-  class Bin
+  class Parser
     class Error
       attr_reader :parent
 
@@ -88,7 +88,7 @@ class Template
 
       def children
         exception.children.map do |child|
-          Template::Bin::Error.new(exception: child, parent: self, trace: trace)
+          self.class.new(exception: child, parent: self, trace: trace)
         end
       end
 

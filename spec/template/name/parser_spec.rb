@@ -1,4 +1,3 @@
-# typed: false
 require "spec_helper"
 
 RSpec.describe Template::Name::Parser do

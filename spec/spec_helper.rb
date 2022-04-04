@@ -1,4 +1,3 @@
-# typed: strict
 require_relative "../lib/template"
 
 RSpec.configure do |config|

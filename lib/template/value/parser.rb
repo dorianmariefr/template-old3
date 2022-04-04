@@ -1,4 +1,3 @@
-# typed: false
 class Template
   class Value
     class Parser < Parslet::Parser

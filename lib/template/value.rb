@@ -1,4 +1,3 @@
-# typed: strict
 require_relative "value/parser"
 
 class Template
