@@ -1,6 +1,7 @@
 require_relative "cli/generic"
 
 require_relative "cli/boolean"
+require_relative "cli/call"
 require_relative "cli/dictionnary"
 require_relative "cli/list"
 require_relative "cli/nothing"
@@ -31,6 +32,9 @@ class Template
 
     desc "dictionnary SUBCOMMAND ..ARGS", "list's language"
     subcommand :dictionnary, Template::Cli::Dictionnary
+
+    desc "call SUBCOMMAND ..ARGS", "call's language"
+    subcommand :call, Template::Cli::Call
 
     desc "value SUBCOMMAND ..ARGS", "value's language"
     subcommand :value, Template::Cli::Value

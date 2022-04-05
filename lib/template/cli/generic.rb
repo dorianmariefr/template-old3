@@ -20,12 +20,6 @@ class Template
         exit 1
       end
 
-      def self.transform(source, options)
-        parsed = parse(source, options)
-        parsed = parsed.fetch(key) if key
-        base.new(parsed)
-      end
-
       desc "parse SOURCE", "parses source into ruby hash"
       option :verbose, type: :boolean, default: false, aliases: "-v"
       def parse(source)
@@ -33,23 +27,24 @@ class Template
       end
 
       desc(
-        "evaluate SOURCE",
-        "evaluates source with optional context"
-      )
-      option :verbose, type: :boolean, default: false, aliases: "-v"
-      option :context, type: :string, default: "", aliases: "-c"
-      def evaluate(source)
-        pp self.class.transform(source, options).evaluate
-      end
-
-      desc(
         "render SOURCE",
         "renders source with optional context"
       )
       option :verbose, type: :boolean, default: false, aliases: "-v"
-      option :context, type: :string, default: "", aliases: "-c"
+      option :context, type: :string, default: nil, aliases: "-c"
       def render(source)
-        print self.class.transform(source, options).render
+        parsed = self.class.parse(source, options)
+        parsed = parsed.fetch(key) if self.class.key
+
+        if options.context
+          context = ::Template::Value.new(
+            self.class.parse(options.context, options)
+          ).evaluate
+          print self.class.base.new(parsed).render(context)
+        else
+          print self.class.base.new(parsed).render
+        end
+
         puts
       end
     end

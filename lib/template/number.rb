@@ -24,11 +24,11 @@ class Template
       raise parsed.inspect if parsed.any?
     end
 
-    def evaluate
+    def evaluate(_context = ::Template::Dictionnary.empty)
       self
     end
 
-    def render
+    def render(_context = ::Template::Dictionnary.empty)
       if infinity? || to_ruby.infinite?
         to_ruby.to_s
       elsif to_ruby.to_i == to_ruby

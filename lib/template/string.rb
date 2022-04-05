@@ -7,12 +7,20 @@ class Template
       raise parsed.inspect unless string?
     end
 
-    def evaluate
+    def fetch(*args)
+      ::Template::Nothing.nothing
+    end
+
+    def evaluate(_context = ::Template::Dictionnary.empty)
       self
     end
 
-    def render
+    def render(_context = ::Template::Dictionnary.empty)
       value
+    end
+
+    def equal?(other)
+      other == value
     end
 
     private

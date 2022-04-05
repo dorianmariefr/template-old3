@@ -17,12 +17,14 @@ class Template
       raise parsed.inspect unless array?
     end
 
-    def evaluate
-      children.map(&:evaluate)
+    def evaluate(context = ::Template::Dictionnary.empty)
+      @children = children.map { |child| child.evaluate(context) }
+      self
     end
 
-    def render
-      evaluate.map(&:render).join(" ")
+    def render(context = ::Template::Dictionnary.empty)
+      evaluate(context)
+      children.map(&:render).join(" ")
     end
 
     private

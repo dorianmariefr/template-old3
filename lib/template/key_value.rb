@@ -1,5 +1,7 @@
 class Template
   class KeyValue
+    attr_reader :value
+
     def initialize(parsed)
       parsed = parsed.dup
 
@@ -10,29 +12,33 @@ class Template
       raise parsed.inspect unless key_value?
     end
 
-    def evaluate
-      @key = key.evaluate
-      @value = value.evaluate
+    def evaluate(context = ::Template::Dictionnary.empty)
+      @key = key.evaluate(context)
+      @value = value.evaluate(context)
       self
     end
 
-    def render
-      "#{key.render}: #{value.render}"
+    def render(context = ::Template::Dictionnary.empty)
+      "#{key.render(context)}: #{value.render(context)}"
+    end
+
+    def key?(other_key)
+      key.equal?(other_key)
     end
 
     private
 
-    attr_reader :key, :value
+    attr_reader :key
 
     def key_value?
-      key? && value?
+      has_key? && has_value?
     end
 
-    def key?
+    def has_key?
       !!key
     end
 
-    def value?
+    def has_value?
       !!value
     end
   end

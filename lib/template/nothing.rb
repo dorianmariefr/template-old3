@@ -9,6 +9,10 @@ class Template
       raise parsed.inspect unless nothing?
     end
 
+    def self.nothing
+      new(NOTHING)
+    end
+
     def evaluate
       self
     end
