@@ -1,5 +1,5 @@
 class Template
-  class Nothing
+  class Nothing < Node
     class Parser < Parslet::Parser
       rule(:nothing_keyword) { str("nothing") }
       rule(:nothing) { nothing_keyword.as(:nothing) }

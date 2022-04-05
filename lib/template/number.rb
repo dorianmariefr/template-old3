@@ -1,7 +1,7 @@
 require_relative "number/parser"
 
 class Template
-  class Number
+  class Number < Node
     prepend MemoWise
 
     MINUS = "-"
@@ -24,11 +24,19 @@ class Template
       raise parsed.inspect if parsed.any?
     end
 
-    def evaluate(_context = ::Template::Dictionnary.empty)
+    def self.key
+      :number
+    end
+
+    def self.parser
+      ::Template::Number::Parser
+    end
+
+    def evaluate(_context = default_context)
       self
     end
 
-    def render(_context = ::Template::Dictionnary.empty)
+    def render(_context = default_context)
       if infinity? || to_ruby.infinite?
         to_ruby.to_s
       elsif to_ruby.to_i == to_ruby

@@ -1,5 +1,5 @@
 class Template
-  class Dictionnary
+  class Dictionnary < Node
     class Parser < Parslet::Parser
       rule(:left_curly_bracket) { str("{") >> spaces? }
       rule(:right_curly_bracket) { spaces? >> str("}") }

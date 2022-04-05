@@ -1,5 +1,5 @@
 class Template
-  class Value
+  class Value < Node
     class Parser < Parslet::Parser
       rule(:nothing) { ::Template::Nothing::Parser.new }
       rule(:boolean) { ::Template::Boolean::Parser.new }

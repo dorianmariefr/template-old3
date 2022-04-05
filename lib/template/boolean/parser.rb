@@ -1,5 +1,5 @@
 class Template
-  class Boolean
+  class Boolean < Node
     class Parser < Parslet::Parser
       rule(:true_keyword) { str("true") }
       rule(:false_keyword) { str("false") }

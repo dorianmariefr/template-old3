@@ -1,7 +1,7 @@
 require_relative "list/parser"
 
 class Template
-  class List
+  class List < Node
     def initialize(parsed)
       parsed = parsed.is_a?(::String) ? {} : parsed.dup
 
@@ -17,12 +17,20 @@ class Template
       raise parsed.inspect unless array?
     end
 
-    def evaluate(context = ::Template::Dictionnary.empty)
+    def self.key
+      :list
+    end
+
+    def self.parser
+      ::Template::List::Parser
+    end
+
+    def evaluate(context = default_context)
       @children = children.map { |child| child.evaluate(context) }
       self
     end
 
-    def render(context = ::Template::Dictionnary.empty)
+    def render(context = default_context)
       evaluate(context)
       children.map(&:render).join(" ")
     end

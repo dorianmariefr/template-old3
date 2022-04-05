@@ -1,7 +1,7 @@
 require_relative "nothing/parser"
 
 class Template
-  class Nothing
+  class Nothing < Node
     NOTHING = "nothing"
 
     def initialize(parsed)
@@ -13,11 +13,19 @@ class Template
       new(NOTHING)
     end
 
-    def evaluate
+    def self.key
+      :nothing
+    end
+
+    def self.parser
+      ::Template::Nothing::Parser
+    end
+
+    def evaluate(_context = default_context)
       self
     end
 
-    def render
+    def render(_context = default_context)
       ""
     end
 

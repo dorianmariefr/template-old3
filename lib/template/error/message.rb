@@ -1,36 +1,36 @@
-# typed: false
 class Template
-  class Parser
-    class Error
+  class Error < ::StandardError
+    class Message
       attr_reader :parent
 
-      def initialize(parent: nil, exception:, trace: false)
+      def initialize(parent: nil, exception:, verbose: false)
         @parent = parent
         @exception = exception
-        @trace = trace
+        @verbose = verbose
       end
 
-      def self.print(exception, trace: false)
-        error = new(exception: exception.parse_failure_cause, trace: trace)
-        error.max_child.print
+      def self.from_exception(exception, verbose: false)
+        new(exception: exception.parse_failure_cause, verbose: verbose).max_child
       end
 
       def max_child
         tree.flatten.max_by(&:position)
       end
 
-      def print
-        parent.print if parent && trace?
-
-        puts "#{prefix}#{message}"
+      def to_s
+        result = ""
+        result += parent.to_s if parent && verbose?
+        result += "#{prefix}#{message}\n"
 
         if lines.size > 1
-          puts "#{prefix}#{line_number}: #{line_source}"
-          puts "#{prefix}#{" " * line_number.to_s.size}  #{" " * line_position}^"
+          result += "#{prefix}#{line_number}: #{line_source}\n"
+          result += "#{prefix}#{" " * line_number.to_s.size}  #{" " * line_position}^\n"
         else
-          puts "#{prefix}#{line_source}"
-          puts "#{prefix}#{" " * line_position}^"
+          result += "#{prefix}#{line_source}\n"
+          result += "#{prefix}#{" " * line_position}^\n"
         end
+
+        result
       end
 
       def position
@@ -43,7 +43,7 @@ class Template
 
       private
 
-      attr_reader :exception, :trace
+      attr_reader :exception, :verbose
 
       def index
         i = 0
@@ -55,7 +55,7 @@ class Template
       end
 
       def prefix
-        trace ? "  " * index : ""
+        verbose ? "  " * index : ""
       end
 
       def message
@@ -88,12 +88,12 @@ class Template
 
       def children
         exception.children.map do |child|
-          self.class.new(exception: child, parent: self, trace: trace)
+          self.class.new(exception: child, parent: self, verbose: verbose)
         end
       end
 
-      def trace?
-        !!trace
+      def verbose?
+        !!verbose
       end
     end
   end

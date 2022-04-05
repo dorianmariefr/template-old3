@@ -1,5 +1,5 @@
 class Template
-  class List
+  class List < Node
     class Parser < Parslet::Parser
       rule(:value) { Template::Value::Parser.new }
 

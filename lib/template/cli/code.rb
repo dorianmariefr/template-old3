@@ -1,8 +1,8 @@
 class Template
   class Cli < Thor
-    class Number < Generic
+    class Code < Generic
       def self.base
-        ::Template::Number
+        ::Template::Code
       end
     end
   end

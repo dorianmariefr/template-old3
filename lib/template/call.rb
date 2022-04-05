@@ -1,12 +1,20 @@
 require_relative "call/parser"
 
 class Template
-  class Call
+  class Call < Node
     def initialize(parsed)
       parsed = parsed.dup
       @name = parsed.delete(:name)
       raise parsed.inspect if parsed.any?
       raise parsed.inspect unless call?
+    end
+
+    def self.key
+      :call
+    end
+
+    def self.parser
+      ::Template::Call::Parser
     end
 
     def evaluate(context = ::Template::Dictionnary.empty)

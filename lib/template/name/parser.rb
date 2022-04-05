@@ -1,5 +1,5 @@
 class Template
-  class Name
+  class Name < Node
     class Parser < Parslet::Parser
       rule(:number_sign) { str("#") }
       rule(:single_quote) { str("'") }

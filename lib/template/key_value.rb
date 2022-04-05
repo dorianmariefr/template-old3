@@ -1,5 +1,5 @@
 class Template
-  class KeyValue
+  class KeyValue < Node
     attr_reader :value
 
     def initialize(parsed)
@@ -12,13 +12,21 @@ class Template
       raise parsed.inspect unless key_value?
     end
 
-    def evaluate(context = ::Template::Dictionnary.empty)
+    def self.key
+      nil
+    end
+
+    def self.parser
+      raise NotImplementedError
+    end
+
+    def evaluate(context = default_context)
       @key = key.evaluate(context)
       @value = value.evaluate(context)
       self
     end
 
-    def render(context = ::Template::Dictionnary.empty)
+    def render(context = default_context)
       "#{key.render(context)}: #{value.render(context)}"
     end
 

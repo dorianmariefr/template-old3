@@ -1,5 +1,5 @@
 class Template
-  class String
+  class String < Node
     class Parser < Parslet::Parser
       rule(:single_quote) { str("'") }
       rule(:double_quote) { str("\"") }

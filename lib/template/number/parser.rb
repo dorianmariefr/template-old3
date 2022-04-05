@@ -1,5 +1,5 @@
 class Template
-  class Number
+  class Number < Node
     class Parser < Parslet::Parser
       rule(:minus) { str("-") }
       rule(:plus) { str("+") }

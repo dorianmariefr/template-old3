@@ -1,7 +1,7 @@
 require_relative "dictionnary/parser"
 
 class Template
-  class Dictionnary
+  class Dictionnary < Node
     def initialize(parsed)
       parsed = parsed.is_a?(::String) ? {} : parsed.dup
 
@@ -17,12 +17,19 @@ class Template
       raise parsed.inspect unless array?
     end
 
+    def self.key
+      :dictionnary
+    end
+
+    def self.parser
+      ::Template::Dictionnary::Parser
+    end
+
     def self.empty
       new({})
     end
 
     def fetch(*args)
-      raise NotImplementedError if args.size < 1 || args.size > 2
       value = children.detect { |child| child.key?(args[0]) }&.value
       if args.size == 2
         value || args[1]
@@ -31,12 +38,12 @@ class Template
       end
     end
 
-    def evaluate(context = ::Template::Dictionnary.empty)
+    def evaluate(context = default_context)
       @children = children.map { |child| child.evaluate(context) }
       self
     end
 
-    def render(context = ::Template::Dictionnary.empty)
+    def render(context = default_context)
       evaluate(context)
       children.map { |child| child.render }.join(" ")
     end

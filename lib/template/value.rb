@@ -1,7 +1,7 @@
 require_relative "value/parser"
 
 class Template
-  class Value
+  class Value < Node
     NOTHING = :nothing
     BOOLEAN = :boolean
     STRING = :string
@@ -30,11 +30,19 @@ class Template
       raise parsed.inspect unless value?
     end
 
-    def evaluate(context = ::Template::Dictionnary.empty)
+    def self.key
+      nil
+    end
+
+    def self.parser
+      ::Template::Value::Parser
+    end
+
+    def evaluate(context = default_context)
       value.evaluate(context)
     end
 
-    def render(context = ::Template::Dictionnary.empty)
+    def render(context = default_context)
       evaluate(context).render
     end
 

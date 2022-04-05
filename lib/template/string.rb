@@ -1,21 +1,29 @@
 require_relative "string/parser"
 
 class Template
-  class String
+  class String < Node
     def initialize(parsed)
       @value = parsed
       raise parsed.inspect unless string?
+    end
+
+    def self.key
+      :string
+    end
+
+    def self.parser
+      ::Template::String::Parser
     end
 
     def fetch(*args)
       ::Template::Nothing.nothing
     end
 
-    def evaluate(_context = ::Template::Dictionnary.empty)
+    def evaluate(_context = default_context)
       self
     end
 
-    def render(_context = ::Template::Dictionnary.empty)
+    def render(_context = default_context)
       value
     end
 
