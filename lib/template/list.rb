@@ -10,7 +10,7 @@ class Template
         parsed.delete(:second),
         parsed.delete(:others)
       ].flatten.compact.map do |value|
-        Template::Value.new(value)
+        ::Template::Value.new(value)
       end
 
       raise parsed.inspect if parsed.any?

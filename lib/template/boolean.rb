@@ -18,11 +18,11 @@ class Template
       ::Template::Boolean::Parser
     end
 
-    def evaluate
+    def evaluate(_context = default_context)
       self
     end
 
-    def render
+    def render(_context = default_context)
       value
     end
 

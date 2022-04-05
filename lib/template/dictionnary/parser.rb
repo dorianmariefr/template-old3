@@ -12,8 +12,8 @@ class Template
       rule(:spaces) { (space | newline).repeat(1) }
       rule(:spaces?) { spaces.maybe }
 
-      rule(:name) { Template::Name::Parser.new.as(:string) }
-      rule(:value) { Template::Value::Parser.new }
+      rule(:name) { ::Template::Name::Parser.new.as(:string) }
+      rule(:value) { ::Template::Value::Parser.new }
 
       rule(:key_value) do
         (name.as(:key) >> colon >> value.as(:value)) |

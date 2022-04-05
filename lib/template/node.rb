@@ -1,7 +1,7 @@
 class Template
   class Node
     def initialize(parsed)
-      raise NotImplementedError
+      raise NotImplementedError, self.class.name
     end
 
     def self.parser

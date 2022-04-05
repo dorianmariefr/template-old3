@@ -1,7 +1,7 @@
 class Template
   class List < Node
     class Parser < Parslet::Parser
-      rule(:value) { Template::Value::Parser.new }
+      rule(:value) { ::Template::Value::Parser.new }
 
       rule(:space) { str(" ") }
       rule(:newline) { str("\n") }
