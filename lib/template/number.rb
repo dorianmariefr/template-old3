@@ -12,6 +12,15 @@ class Template
     BASE_10 = :base_10
     BASE_16 = :base_16
 
+    RUBY_SIGNS = {
+      BigDecimal::SIGN_POSITIVE_FINITE => PLUS,
+      BigDecimal::SIGN_NEGATIVE_FINITE => MINUS,
+      BigDecimal::SIGN_POSITIVE_INFINITE => PLUS,
+      BigDecimal::SIGN_NEGATIVE_INFINITE => MINUS,
+      BigDecimal::SIGN_POSITIVE_ZERO => PLUS,
+      BigDecimal::SIGN_NEGATIVE_ZERO => MINUS,
+    }
+
     def initialize(parsed)
       parsed = parsed.dup
       @sign = parsed.delete(:sign)
@@ -30,6 +39,35 @@ class Template
 
     def self.parser
       ::Template::Number::Parser
+    end
+
+    def self.from_ruby(number)
+      raise number.inspect unless number.is_a?(::BigDecimal)
+
+      new({
+        sign: RUBY_SIGNS.fetch(number.sign),
+        infinity: number.infinite? ? INFINITY : nil,
+        base_10: {
+          whole: number.floor.to_s,
+          decimal: number.modulo(1).to_s
+        }
+      }.compact)
+    end
+
+    def plus(other)
+      ::Template::Number.from_ruby(to_ruby + other.to_ruby)
+    end
+
+    def minus(other)
+      ::Template::Number.from_ruby(to_ruby - other.to_ruby)
+    end
+
+    def times(other)
+      ::Template::Number.from_ruby(to_ruby * other.to_ruby)
+    end
+
+    def divided_by(other)
+      ::Template::Number.from_ruby(to_ruby / other.to_ruby)
     end
 
     def evaluate(_context = default_context)

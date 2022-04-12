@@ -12,38 +12,33 @@ class Template
       raise NotImplementedError
     end
 
-    def self.parse(source, options = {})
+    def self.parse(source, verbose: false)
       parser.new.parse(source)
     rescue ::Parslet::ParseFailed => error
       raise(
         ::Template::Error,
-        ::Template::Error::Message.from_exception(error, verbose: !!options[:verbose])
+        ::Template::Error::Message.from_exception(error, verbose: verbose)
       )
     end
 
-    def self.evaluate(source, options = {})
-      parsed = parse(source, { verbose: options[:verbose] })
+    def self.evaluate(source, context: nil, verbose: false)
+      parsed = parse(source, verbose: verbose)
       parsed = parsed.fetch(key) if key
-      if options[:context]
-        context = ::Template::Code.evaluate(
-          options[:context],
-          { verbose: options[:verbose] }
-        )
+
+      if context
+        context = ::Template::Code.evaluate(context, verbose: verbose)
         new(parsed).evaluate(context)
       else
         new(parsed).evaluate
       end
     end
 
-    def self.render(source, options = {})
-      parsed = parse(source, { verbose: options[:verbose] })
+    def self.render(source, context: nil, verbose: false)
+      parsed = parse(source, verbose: verbose)
       parsed = parsed.fetch(key) if key
 
-      if options[:context]
-        context = ::Template::Code.evaluate(
-          options[:context],
-          { verbose: options[:verbose] }
-        )
+      if context
+        context = ::Template::Code.evaluate(context, verbose: verbose)
         new(parsed).render(context)
       else
         new(parsed).render

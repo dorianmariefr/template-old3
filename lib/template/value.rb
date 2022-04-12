@@ -31,7 +31,7 @@ class Template
     end
 
     def self.key
-      nil
+      :value
     end
 
     def self.parser

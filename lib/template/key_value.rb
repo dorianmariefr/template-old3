@@ -1,3 +1,5 @@
+require_relative "key_value/parser"
+
 class Template
   class KeyValue < Node
     attr_reader :value
@@ -5,8 +7,8 @@ class Template
     def initialize(parsed)
       parsed = parsed.dup
 
-      @key = ::Template::Value.new(parsed.delete(:key))
-      @value = ::Template::Value.new(parsed.delete(:value))
+      @key = ::Template::Statement.new(parsed.delete(:key))
+      @value = ::Template::Statement.new(parsed.delete(:value))
 
       raise parsed.inspect if parsed.any?
       raise parsed.inspect unless key_value?

@@ -1,10 +1,27 @@
 require_relative "statement/parser"
+require_relative "statement/plus"
+require_relative "statement/multiplication"
+require_relative "statement/value"
+require_relative "statement/call"
 
 class Template
   class Statement < Node
     def initialize(parsed)
       @value = parsed.delete(:value)
-      @value = ::Template::Value.new(value) if value
+      @value = ::Template::Statement::Value.new(value) if value
+
+      @plus = parsed.delete(:plus)
+      @plus = ::Template::Statement::Plus.new(plus) if plus
+
+      @multiplication = parsed.delete(:multiplication)
+
+      if multiplication
+        @multiplication = ::Template::Statement::Multiplication.new(multiplication)
+      end
+
+      @call = parsed.delete(:call)
+      @call = ::Template::Statement::Call.new(call) if call
+
       raise parsed.inspect if parsed.any?
       raise parsed.inspect unless statement?
     end
@@ -27,18 +44,30 @@ class Template
 
     private
 
-    attr_reader :value
+    attr_reader :value, :plus, :multiplication, :call
 
     def statement
-      value
+      value || plus || multiplication || call
     end
 
     def statement?
-      value?
+      value? || plus? || multiplication? || call?
     end
 
     def value?
       !!value
+    end
+
+    def plus?
+      !!plus
+    end
+
+    def multiplication?
+      !!multiplication
+    end
+
+    def call?
+      !!call
     end
   end
 end

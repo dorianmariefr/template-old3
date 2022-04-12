@@ -17,11 +17,11 @@ class Template
       ::Template::Call::Parser
     end
 
-    def evaluate(context = ::Template::Dictionnary.empty)
+    def evaluate(context = default_context)
       context.fetch(name, ::Template::Nothing.nothing)
     end
 
-    def render(context = ::Template::Dictionnary.empty)
+    def render(context = default_context)
       evaluate(context).render
     end
 

@@ -8,7 +8,7 @@ class Template
       rule(:dictionnary) { ::Template::Dictionnary::Parser.new }
       rule(:list) { ::Template::List::Parser.new }
       rule(:value) do
-        nothing | boolean | number | string | dictionnary | list
+        (nothing | boolean | number | string | dictionnary | list).as(:value)
       end
       root(:value)
     end

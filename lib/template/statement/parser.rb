@@ -1,12 +1,13 @@
 class Template
   class Statement < Node
     class Parser < Parslet::Parser
-      rule(:space) { str(" ") }
-      rule(:newline) { str("\n") }
-      rule(:spaces) { (space | newline).repeat(1) }
-      rule(:spaces?) { spaces.maybe }
-      rule(:value) { ::Template::Value::Parser.new }
-      rule(:statement) { spaces? >> value.as(:value) >> spaces? }
+      rule(:plus_statement) { ::Template::Statement::Plus::Parser.new }
+      rule(:implicit_dictionnary) { ::Template::ImplicitDictionnary::Parser.new }
+      rule(:implicit_list) { ::Template::ImplicitList::Parser.new }
+
+      rule(:statement) do
+        implicit_dictionnary.as(:value) | implicit_list.as(:value) | plus_statement
+      end
       root(:statement)
     end
   end

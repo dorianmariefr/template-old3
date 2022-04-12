@@ -20,11 +20,14 @@ class Template
 
     desc "parse SOURCE", "parses source into ruby hash"
     option :verbose, type: :boolean, default: false, aliases: "-v"
-    def parse(source)
-      pp ::Template::Template.parse(source, options)
-    rescue ::Template::Error => error
-      $stderr.puts error.message
-      exit 1
+    def parse(*sources)
+      sources.each do |source|
+        source = File.read(source) if File.exists?(source)
+        pp ::Template::Template.parse(source, verbose: options[:verbose])
+      rescue ::Template::Error => error
+        $stderr.puts error.message
+        exit 1
+      end
     end
 
     desc(
@@ -33,12 +36,22 @@ class Template
     )
     option :verbose, type: :boolean, default: false, aliases: "-v"
     option :context, type: :string, default: nil, aliases: "-c"
-    def render(source)
-      print ::Template::Template.render(source, options)
-      puts
-    rescue ::Template::Error => error
-      $stderr.puts error.message
-      exit 1
+    def render(*sources)
+      context = options[:context]
+
+      if context && File.exists?(context)
+        context = File.read(context).gsub(/\n$/, '')
+      end
+
+      sources.each do |source|
+        source = File.read(source) if File.exists?(source)
+        puts ::Template::Template.render(
+          source, context: context, verbose: options[:verbose]
+        )
+      rescue ::Template::Error => error
+        $stderr.puts error.message
+        exit 1
+      end
     end
 
     desc "nothing SUBCOMMAND ..ARGS", "nothings's language"
