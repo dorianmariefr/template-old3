@@ -1,7 +1,7 @@
 class Template
   class ImplicitDictionnary
     class Parser < Parslet::Parser
-      rule(:plus_statement) { ::Template::Statement::Plus::Parser.new }
+      rule(:modifier_statement) { ::Template::Modifier::Parser.new }
       rule(:name) { ::Template::Name::Parser.new }
 
       rule(:comma) { spaces? >> str(",") >> spaces? }
@@ -13,7 +13,7 @@ class Template
       rule(:spaces) { (space | newline).repeat(1) }
       rule(:spaces?) { spaces.maybe }
 
-      rule(:implicit_value) { plus_statement }
+      rule(:implicit_value) { modifier_statement }
 
       rule(:implicit_key_value) do
         name.as(:string).as(:value).as(:key) >> colon >>

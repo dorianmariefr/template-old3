@@ -15,7 +15,7 @@ class Template
       end
 
       def max_child
-        tree.flatten.max_by(&:position)
+        tree.flatten.reverse.max_by(&:position)
       end
 
       def to_s
@@ -61,7 +61,11 @@ class Template
       end
 
       def message
-        exception.message.to_s
+        if exception.message.is_a?(Array)
+          exception.message.join
+        else
+          exception.message.to_s
+        end
       end
 
       def line_index

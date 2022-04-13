@@ -1,40 +1,32 @@
 require_relative "call/parser"
 
 class Template
-  class Call < Node
-    def initialize(parsed)
-      parsed = parsed.dup
-      @name = parsed.delete(:name)
-      raise parsed.inspect if parsed.any?
-      raise parsed.inspect unless call?
-    end
+  class Statement < Node
+    class Call < Node
+      def initialize(parsed)
+        @body = ::Template::Call.new(parsed)
+        raise parsed unless call?
+      end
 
-    def self.key
-      :call
-    end
+      def evaluate(context = default_context)
+        body.evaluate(context)
+      end
 
-    def self.parser
-      ::Template::Call::Parser
-    end
+      def render(context = default_context)
+        evaluate(context).render
+      end
 
-    def evaluate(context = default_context)
-      context.fetch(name, ::Template::Nothing.nothing)
-    end
+      private
 
-    def render(context = default_context)
-      evaluate(context).render
-    end
+      attr_reader :body
 
-    private
+      def call?
+        body?
+      end
 
-    attr_reader :name
-
-    def call?
-      name?
-    end
-
-    def name?
-      !!name
+      def body?
+        !!body
+      end
     end
   end
 end

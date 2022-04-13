@@ -7,8 +7,10 @@ class Template
       rule(:string) { ::Template::String::Parser.new }
       rule(:dictionnary) { ::Template::Dictionnary::Parser.new }
       rule(:list) { ::Template::List::Parser.new }
+      rule(:call) { ::Template::Call::Parser.new }
       rule(:value) do
-        (nothing | boolean | number | string | dictionnary | list).as(:value)
+        (nothing | boolean | number | string | dictionnary | list).as(:value) |
+          call
       end
       root(:value)
     end
