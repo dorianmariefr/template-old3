@@ -51,7 +51,8 @@ class Template
     attr_reader :nothing, :boolean, :string, :number, :list, :dictionnary, :call
 
     def value?
-      nothing? || boolean? || string? || number? || list? || dictionnary? || call?
+      nothing? || boolean? || string? || number? || list? || dictionnary? ||
+        call?
     end
 
     def nothing?

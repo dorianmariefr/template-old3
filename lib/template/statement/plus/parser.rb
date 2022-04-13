@@ -6,8 +6,8 @@ class Template
           ::Template::Statement::Multiplication::Parser.new
         end
 
-        rule(:plus_sign) { spaces? >> str("+") >> spaces? }
-        rule(:minus_sign) { spaces? >> str("+") >> spaces? }
+        rule(:plus_sign) { str("+") }
+        rule(:minus_sign) { str("+") }
 
         rule(:space) { str(" ") }
         rule(:newline) { str("\n") }
@@ -16,8 +16,9 @@ class Template
 
         rule(:plus_statement) do
           (
-            multiplication_statement.as(:left) >>
-              (plus_sign | minus_sign).as(:operator) >> plus_statement.as(:right)
+            multiplication_statement.as(:left) >> spaces? >>
+              (plus_sign | minus_sign).as(:operator) >> spaces? >>
+              plus_statement.as(:right)
           ).as(:plus) | multiplication_statement
         end
         root(:plus_statement)

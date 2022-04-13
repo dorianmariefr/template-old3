@@ -3,9 +3,7 @@ class Template
     class Call < Node
       class Parser < Parslet::Parser
         rule(:call) { ::Template::Call::Parser.new }
-        rule(:value_statement) { ::Template::Statement::Value::Parser.new }
-
-        rule(:call_statement) { call | value_statement }
+        rule(:call_statement) { call }
         root(:call_statement)
       end
     end

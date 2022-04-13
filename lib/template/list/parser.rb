@@ -17,7 +17,8 @@ class Template
           left_square_bracket.ignore >>
             (
               plus_statement.as(:first) >>
-                (comma >> plus_statement).repeat(1).as(:others).maybe >> comma.maybe
+                (comma >> plus_statement).repeat(1).as(:others).maybe >>
+                comma.maybe
             ).maybe >> right_square_bracket.ignore
         ).as(:list)
       end

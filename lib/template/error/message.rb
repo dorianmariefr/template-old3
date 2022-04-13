@@ -10,7 +10,8 @@ class Template
       end
 
       def self.from_exception(exception, verbose: false)
-        new(exception: exception.parse_failure_cause, verbose: verbose).max_child
+        new(exception: exception.parse_failure_cause, verbose: verbose)
+          .max_child
       end
 
       def max_child
@@ -24,7 +25,8 @@ class Template
 
         if lines.size > 1
           result += "#{prefix}#{line_number}: #{line_source}\n"
-          result += "#{prefix}#{" " * line_number.to_s.size}  #{" " * line_position}^\n"
+          result +=
+            "#{prefix}#{" " * line_number.to_s.size}  #{" " * line_position}^\n"
         else
           result += "#{prefix}#{line_source}\n"
           result += "#{prefix}#{" " * line_position}^\n"

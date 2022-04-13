@@ -1,8 +1,17 @@
 require_relative "statement/parser"
-require_relative "statement/plus"
+
+require_relative "statement/modifier" # a { b } unless  c { d }
+require_relative "statement/block" # a or b { c or d }
+require_relative "statement/and" # not a or not b
+require_relative "statement/not" # b = not a
+require_relative "statement/assign" # a = b rescue c
+require_relative "statement/rescue" # a ? b : c rescue d
+require_relative "statement/ternary" # a ? b..c : c..d
+require_relative "statement/range" # a..b || c..d
 require_relative "statement/multiplication"
-require_relative "statement/value"
-require_relative "statement/call"
+require_relative "statement/plus"
+require_relative "statement/call" # 1.times { 1 }
+require_relative "statement/value" # 1
 
 class Template
   class Statement < Node
@@ -16,7 +25,8 @@ class Template
       @multiplication = parsed.delete(:multiplication)
 
       if multiplication
-        @multiplication = ::Template::Statement::Multiplication.new(multiplication)
+        @multiplication =
+          ::Template::Statement::Multiplication.new(multiplication)
       end
 
       @call = parsed.delete(:call)

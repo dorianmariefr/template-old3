@@ -5,13 +5,12 @@ class Template
     def initialize(parsed)
       parsed = parsed.is_a?(::String) ? {} : parsed.dup
 
-      @children = [
-        parsed.delete(:first),
-        parsed.delete(:second),
-        parsed.delete(:others)
-      ].flatten.compact.map do |value|
-        ::Template::KeyValue.new(value)
-      end
+      @children =
+        [
+          parsed.delete(:first),
+          parsed.delete(:second),
+          parsed.delete(:others)
+        ].flatten.compact.map { |value| ::Template::KeyValue.new(value) }
 
       raise parsed.inspect if parsed.any?
       raise parsed.inspect unless array?
@@ -31,11 +30,7 @@ class Template
 
     def fetch(*args)
       value = children.detect { |child| child.key?(args[0]) }&.value
-      if args.size == 2
-        value || args[1]
-      else
-        value || ::Template::Nothing.nothing
-      end
+      args.size == 2 ? value || args[1] : value || ::Template::Nothing.nothing
     end
 
     def evaluate(context = default_context)

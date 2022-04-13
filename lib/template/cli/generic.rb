@@ -9,7 +9,7 @@ class Template
       option :verbose, type: :boolean, default: false, aliases: "-v"
       def parse(*sources)
         sources.each do |source|
-          source = File.read(source).gsub(/\n$/, '') if File.exists?(source)
+          source = File.read(source).gsub(/\n$/, "") if File.exists?(source)
           pp self.class.base.parse(source, verbose: options[:verbose])
         rescue ::Template::Error => error
           $stderr.puts error.message
@@ -17,26 +17,23 @@ class Template
         end
       end
 
-      desc(
-        "render SOURCE",
-        "renders source with optional context"
-      )
+      desc("render SOURCE", "renders source with optional context")
       option :verbose, type: :boolean, default: false, aliases: "-v"
       option :context, type: :string, default: nil, aliases: "-c"
       def render(*sources)
         context = options[:context]
 
         if context && File.exists?(context)
-          context = File.read(context).gsub(/\n$/, '')
+          context = File.read(context).gsub(/\n$/, "")
         end
 
         sources.each do |source|
-          source = File.read(source).gsub(/\n$/, '') if File.exists?(source)
+          source = File.read(source).gsub(/\n$/, "") if File.exists?(source)
           puts self.class.base.render(
-            source,
-            context: context,
-            verbose: options[:verbose]
-          )
+                 source,
+                 context: context,
+                 verbose: options[:verbose]
+               )
         rescue ::Template::Error => error
           $stderr.puts error.message
           exit 1

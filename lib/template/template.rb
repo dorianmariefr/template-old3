@@ -3,9 +3,7 @@ require_relative "template/parser"
 class Template
   class Template < Node
     def initialize(parsed)
-      @children = parsed.map do |child|
-        ::Template::Part.new(child)
-      end
+      @children = parsed.map { |child| ::Template::Part.new(child) }
 
       raise parsed.inspect unless template?
     end

@@ -1,12 +1,15 @@
 class Template
   class Statement < Node
     class Parser < Parslet::Parser
-      rule(:plus_statement) { ::Template::Statement::Plus::Parser.new }
-      rule(:implicit_dictionnary) { ::Template::ImplicitDictionnary::Parser.new }
+      rule(:unary_statement) { ::Template::Statement::Unary::Parser.new }
+      rule(:implicit_dictionnary) do
+        ::Template::ImplicitDictionnary::Parser.new
+      end
       rule(:implicit_list) { ::Template::ImplicitList::Parser.new }
 
       rule(:statement) do
-        implicit_dictionnary.as(:value) | implicit_list.as(:value) | plus_statement
+        implicit_dictionnary.as(:value) | implicit_list.as(:value) |
+          unary_statement
       end
       root(:statement)
     end

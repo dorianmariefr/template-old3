@@ -18,7 +18,7 @@ class Template
       BigDecimal::SIGN_POSITIVE_INFINITE => PLUS,
       BigDecimal::SIGN_NEGATIVE_INFINITE => MINUS,
       BigDecimal::SIGN_POSITIVE_ZERO => PLUS,
-      BigDecimal::SIGN_NEGATIVE_ZERO => MINUS,
+      BigDecimal::SIGN_NEGATIVE_ZERO => MINUS
     }
 
     def initialize(parsed)
@@ -44,14 +44,16 @@ class Template
     def self.from_ruby(number)
       raise number.inspect unless number.is_a?(::BigDecimal)
 
-      new({
-        sign: RUBY_SIGNS.fetch(number.sign),
-        infinity: number.infinite? ? INFINITY : nil,
-        base_10: {
-          whole: number.floor.to_s,
-          decimal: number.modulo(1).to_s
-        }
-      }.compact)
+      new(
+        {
+          sign: RUBY_SIGNS.fetch(number.sign),
+          infinity: number.infinite? ? INFINITY : nil,
+          base_10: {
+            whole: number.floor.to_s,
+            decimal: number.modulo(1).to_f.to_s[2..-1]
+          }
+        }.compact
+      )
     end
 
     def plus(other)
@@ -106,7 +108,8 @@ class Template
     attr_reader :sign, :infinity, :base_2, :base_8, :base_10, :base_16
 
     def number?
-      (plus? || minus?) && (infinity? || base_2? || base_8? || base_10? || base_16?)
+      (plus? || minus?) &&
+        (infinity? || base_2? || base_8? || base_10? || base_16?)
     end
 
     def plus?
@@ -164,8 +167,10 @@ class Template
 
       total = 0
       total += base_10_whole.to_s.to_i(10).to_d if base_10_whole
-      total += base_10_decimal.to_s.to_i(10).to_d / 10 if base_10_decimal
-      total *= 10 ** base_10_exponent_to_ruby if base_10_exponent
+      if base_10_decimal
+        total += base_10_decimal.to_s.to_i(10).to_d * 10**-base_10_decimal.size
+      end
+      total *= 10**base_10_exponent_to_ruby if base_10_exponent
       total
     end
   end

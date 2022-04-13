@@ -5,7 +5,9 @@ class Template
       rule(:double_quote) { str("\"") }
       rule(:backslash) { str('\\') }
       rule(:n) { str("n") }
-      rule(:escaped_character) { backslash >> (n | single_quote | double_quote) }
+      rule(:escaped_character) do
+        backslash >> (n | single_quote | double_quote)
+      end
       rule(:single_quoted_character) do
         escaped_character | (single_quote.absent? >> backslash.absent? >> any)
       end

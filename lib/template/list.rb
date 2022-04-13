@@ -5,13 +5,12 @@ class Template
     def initialize(parsed)
       parsed = parsed.is_a?(::String) ? {} : parsed.dup
 
-      @children = [
-        parsed.delete(:first),
-        parsed.delete(:second),
-        parsed.delete(:others)
-      ].flatten.compact.map do |value|
-        ::Template::Value.new(value)
-      end
+      @children =
+        [
+          parsed.delete(:first),
+          parsed.delete(:second),
+          parsed.delete(:others)
+        ].flatten.compact.map { |value| ::Template::Value.new(value) }
 
       raise parsed.inspect if parsed.any?
       raise parsed.inspect unless array?

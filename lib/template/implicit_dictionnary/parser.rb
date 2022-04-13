@@ -16,14 +16,16 @@ class Template
       rule(:implicit_value) { plus_statement }
 
       rule(:implicit_key_value) do
-        name.as(:string).as(:value).as(:key) >> colon >> implicit_value.as(:value) |
+        name.as(:string).as(:value).as(:key) >> colon >>
+          implicit_value.as(:value) |
           implicit_value.as(:key) >> arrow >> implicit_value.as(:value)
       end
 
       rule(:implicit_list) do
         (
           implicit_key_value.as(:first) >>
-            (comma >> implicit_key_value).repeat(1).as(:others).maybe >> comma.maybe
+            (comma >> implicit_key_value).repeat(1).as(:others).maybe >>
+            comma.maybe
         ).as(:dictionnary)
       end
 

@@ -3,9 +3,8 @@ require_relative "code/parser"
 class Template
   class Code < Node
     def initialize(parsed)
-      @statements = parsed.map do |statement|
-        ::Template::Statement.new(statement)
-      end
+      @statements =
+        parsed.map { |statement| ::Template::Statement.new(statement) }
 
       raise parsed.inspect unless code?
     end

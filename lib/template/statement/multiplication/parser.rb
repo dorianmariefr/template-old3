@@ -2,10 +2,10 @@ class Template
   class Statement < Node
     class Multiplication < Node
       class Parser < Parslet::Parser
-        rule(:call_statement) { ::Template::Statement::Call::Parser.new }
+        rule(:value_statement) { ::Template::Statement::Value::Parser.new }
 
-        rule(:multiplication_sign) { spaces? >> str("*") >> spaces? }
-        rule(:division_sign) { spaces? >> str("/") >> spaces? }
+        rule(:multiplication_sign) { str("*") }
+        rule(:division_sign) { str("/") }
 
         rule(:space) { str(" ") }
         rule(:newline) { str("\n") }
@@ -14,10 +14,15 @@ class Template
 
         rule(:multiplication_statement) do
           (
-            call_statement.as(:left) >>
-              (multiplication_sign | division_sign).as(:operator) >>
-              multiplication_statement.as(:right)
-          ).as(:multiplication) | call_statement
+            value_statement.as(:left) >>
+              (
+                  spaces? >>
+                    (multiplication_sign | division_sign).as(:operator) >>
+                    spaces? >> value_statement.as(:right)
+                )
+                .repeat(1)
+                .as(:right)
+          ).as(:multiplication) | value_statement
         end
         root(:multiplication_statement)
       end
