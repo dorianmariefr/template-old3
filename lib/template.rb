@@ -6,7 +6,7 @@ require "memo_wise"
 require_relative "template/node"
 
 # value
-require_relative "template/boolean" # true/false
+require_relative "template/boolean" # true
 require_relative "template/dictionnary" # { a: 1, b: 2 }
 require_relative "template/implicit_dictionnary" # a: 1, b: 2
 require_relative "template/implicit_list" # a, b, c
@@ -36,9 +36,9 @@ require_relative "template/bitwise" # a + b << c - d
 require_relative "template/plus" # a * b + c / d
 require_relative "template/multiplication" # a ** b * c ** d
 require_relative "template/power" # -a**-b
-require_relative "template/unary" # -a.b.c
-require_relative "template/call" # 1.a.b
-require_relative "template/value" # 1
+require_relative "template/unary" # -1
+require_relative "template/value" # 1.a
+require_relative "template/call" # a.b
 
 # template
 require_relative "template/part" # Hello, name

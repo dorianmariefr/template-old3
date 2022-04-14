@@ -3,4 +3,17 @@
   a { b } unless c { d }
   a or b { c or d }
   not a or not b
-}
+  not a = b
+  a = b rescue c
+  a ? b : c rescue d
+  a ? b..c : c..d
+  b||c..d&&e
+  a == b || c != d && e =~ f
+  a | b == c << d
+  a + b << c - d
+  a * b + c / d
+  a ** b * c ** d
+  -a**-b
+  -a.b.c
+  1.a.b
+  1

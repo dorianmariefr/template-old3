@@ -1,27 +1,30 @@
 class Template
   class Multiplication < Node
     class Parser < Parslet::Parser
-      rule(:value) { ::Template::Value::Parser.new }
+      rule(:power) { ::Template::Power::Parser.new }
 
-      rule(:multiplication_sign) { str("*") }
-      rule(:division_sign) { str("/") }
+      rule(:times) { str("*") }
+      rule(:slash) { str("/") }
+      rule(:percent) { str("%") }
 
       rule(:space) { str(" ") }
       rule(:newline) { str("\n") }
       rule(:spaces) { (space | newline).repeat(1) }
       rule(:spaces?) { spaces.maybe }
 
+      rule(:operator) { times | slash | percent }
+
       rule(:multiplication) do
         (
-          value.as(:first) >>
+          power.as(:first) >>
             (
                 spaces? >>
-                  (multiplication_sign | division_sign).as(:operator) >>
-                  spaces? >> value.as(:other)
+                  operator.as(:operator) >>
+                  spaces? >> power.as(:other)
               )
               .repeat(1)
               .as(:others)
-        ).as(:multiplication) | value
+        ).as(:multiplication) | power
       end
       root(:multiplication)
     end

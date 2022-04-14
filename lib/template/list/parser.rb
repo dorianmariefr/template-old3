@@ -1,7 +1,7 @@
 class Template
   class List < Node
     class Parser < Parslet::Parser
-      rule(:plus_statement) { ::Template::Statement::Plus::Parser.new }
+      rule(:modifier) { ::Template::Modifier::Parser.new }
 
       rule(:left_square_bracket) { str("[") >> spaces? }
       rule(:right_square_bracket) { spaces? >> str("]") }
@@ -16,8 +16,8 @@ class Template
         (
           left_square_bracket.ignore >>
             (
-              plus_statement.as(:first) >>
-                (comma >> plus_statement).repeat(1).as(:others).maybe >>
+              modifier.as(:first) >>
+                (comma >> modifier).repeat(1).as(:others).maybe >>
                 comma.maybe
             ).maybe >> right_square_bracket.ignore
         ).as(:list)

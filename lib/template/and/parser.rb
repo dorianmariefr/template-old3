@@ -15,7 +15,8 @@ class Template
 
       rule(:and_statement) do
         (
-          not_statement.as(:left) >> spaces? >> keyword.as(:keyword) >> spaces? >> not_statement.as(:right)
+          not_statement.as(:left) >> spaces? >> keyword.as(:keyword) >>
+            spaces? >> not_statement.as(:right)
         ).as(:and) | not_statement
       end
       root(:and_statement)

@@ -17,12 +17,15 @@ class Template
         (
           multiplication.as(:first) >>
             (
-              spaces? >> operator.as(:operator) >> spaces? >>
-                multiplication.as(:other)
-            ).repeat(1).as(:others)
+                spaces? >> operator.as(:operator) >> spaces? >>
+                  multiplication.as(:other)
+              )
+              .repeat(1)
+              .as(:others)
         ).as(:plus) | multiplication
       end
-      root(:plus_statement)
+
+      root(:plus)
     end
   end
 end

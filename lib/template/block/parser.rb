@@ -15,14 +15,17 @@ class Template
       rule(:block_statement) do
         (
           (and_statement.as(:left) >> spaces?).maybe >>
-          (
-            left_curly_bracket >> spaces? >> code.as(:body).maybe >> spaces? >>
-              right_curly_bracket
-          ).as(:first) >>
-          (
-            spaces? >> left_curly_bracket >> spaces? >> code.as(:body).maybe >> spaces? >>
-              right_curly_bracket
-          ).repeat(1).as(:others).maybe
+            (
+              left_curly_bracket >> spaces? >> code.as(:body).maybe >>
+                spaces? >> right_curly_bracket
+            ).as(:first) >>
+            (
+                spaces? >> left_curly_bracket >> spaces? >>
+                  code.as(:body).maybe >> spaces? >> right_curly_bracket
+              )
+              .repeat(1)
+              .as(:others)
+              .maybe
         ).as(:block) | and_statement
       end
 

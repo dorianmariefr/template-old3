@@ -2,7 +2,7 @@ class Template
   class KeyValue < Node
     class Parser < Parslet::Parser
       rule(:name) { ::Template::Name::Parser.new }
-      rule(:code) { ::Template::Code::Parser.new }
+      rule(:modifier) { ::Template::Modifier::Parser.new }
 
       rule(:colon) { str(":") >> spaces? }
       rule(:arrow) { spaces? >> str("=>") >> spaces? }
@@ -13,8 +13,8 @@ class Template
       rule(:spaces?) { spaces.maybe }
 
       rule(:key_value) do
-        (name.as(:string).as(:value).as(:key) >> colon >> code.as(:value)) |
-          (code.as(:key) >> arrow >> code.as(:value))
+        (name.as(:string).as(:value).as(:key) >> colon >> modifier.as(:value)) |
+          (modifier.as(:key) >> arrow >> modifier.as(:value))
       end
 
       root(:key_value)

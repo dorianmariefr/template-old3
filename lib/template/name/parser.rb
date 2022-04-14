@@ -16,6 +16,8 @@ class Template
       rule(:right_carret) { str(">") }
       rule(:space) { str(" ") }
       rule(:newline) { str("\n") }
+      rule(:dot) { str(".") }
+      rule(:plus) { str("+") }
 
       rule(:nothing_keyword) { str("nothing") }
       rule(:true_keyword) { str("true") }
@@ -25,7 +27,7 @@ class Template
         number_sign | single_quote | double_quote | backslash |
           left_square_bracket | right_square_bracket | left_curly_bracket |
           right_curly_bracket | comma | colon | equal | left_carret |
-          right_carret | space | newline
+          right_carret | space | newline | dot | plus
       end
 
       rule(:keyword) { nothing_keyword | true_keyword | false_keyword }
