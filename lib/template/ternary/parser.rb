@@ -14,9 +14,10 @@ class Template
       rule(:ternary_statement) do
         (
           range.as(:left) >> spaces >> question_mark >> spaces? >>
-            range.as(:middle) >> spaces? >> colon >> spaces? >> range.as(:right) |
-          range.as(:left) >> spaces >> question_mark >> spaces? >>
-            range.as(:middle)
+            range.as(:middle) >> spaces? >> colon >> spaces? >>
+            range.as(:right) |
+            range.as(:left) >> spaces >> question_mark >> spaces? >>
+              range.as(:middle)
         ).as(:ternary) | range
       end
       root(:ternary_statement)

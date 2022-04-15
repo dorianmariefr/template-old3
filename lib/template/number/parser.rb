@@ -1,8 +1,6 @@
 class Template
   class Number < Node
     class Parser < Parslet::Parser
-      rule(:minus) { str("-") }
-      rule(:plus) { str("+") }
       rule(:dot) { str(".") }
       rule(:underscore) { str("_") }
       rule(:comma) { str(",") }
@@ -71,12 +69,9 @@ class Template
       # number
       rule(:number) do
         (
-          (minus | plus).as(:sign).maybe >>
-            (
-              infinity.as(:infinity) | base_16_number.as(:base_16) |
-                base_8_number.as(:base_8) | base_2_number.as(:base_2) |
-                base_10_number.as(:base_10)
-            )
+          infinity.as(:infinity) | base_16_number.as(:base_16) |
+            base_8_number.as(:base_8) | base_2_number.as(:base_2) |
+            base_10_number.as(:base_10)
         ).as(:number)
       end
 

@@ -18,7 +18,10 @@ class Template
       rule(:newline) { str("\n") }
       rule(:dot) { str(".") }
       rule(:plus) { str("+") }
+      rule(:minus) { str("-") }
       rule(:ampersand) { str("&") }
+      rule(:pipe) { str("|") }
+      rule(:times) { str("*") }
 
       rule(:nothing_keyword) { str("nothing") }
       rule(:true_keyword) { str("true") }
@@ -28,7 +31,8 @@ class Template
         number_sign | single_quote | double_quote | backslash |
           left_square_bracket | right_square_bracket | left_curly_bracket |
           right_curly_bracket | comma | colon | equal | left_carret |
-          right_carret | space | newline | dot | plus | ampersand
+          right_carret | space | newline | dot | plus | ampersand | pipe |
+          minus | times
       end
 
       rule(:keyword) { nothing_keyword | true_keyword | false_keyword }

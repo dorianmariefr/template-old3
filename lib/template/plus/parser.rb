@@ -4,7 +4,7 @@ class Template
       rule(:multiplication) { ::Template::Multiplication::Parser.new }
 
       rule(:plus_sign) { str("+") }
-      rule(:minus_sign) { str("+") }
+      rule(:minus_sign) { str("-") }
 
       rule(:space) { str(" ") }
       rule(:newline) { str("\n") }

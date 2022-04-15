@@ -32,8 +32,8 @@ class Template
 
       rule(:assign) do
         (
-          rescue_statement.as(:left) >> spaces? >> operator.as(:operator) >> spaces? >>
-            assign.as(:right)
+          rescue_statement.as(:left) >> spaces? >> operator.as(:operator) >>
+            spaces? >> assign.as(:right)
         ).as(:assign) | rescue_statement
       end
       root(:assign)

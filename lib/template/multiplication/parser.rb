@@ -17,11 +17,7 @@ class Template
       rule(:multiplication) do
         (
           power.as(:first) >>
-            (
-                spaces? >>
-                  operator.as(:operator) >>
-                  spaces? >> power.as(:other)
-              )
+            (spaces? >> operator.as(:operator) >> spaces? >> power.as(:other))
               .repeat(1)
               .as(:others)
         ).as(:multiplication) | power

@@ -3,9 +3,9 @@ class Template
     class Parser < Parslet::Parser
       rule(:modifier) { ::Template::Modifier::Parser.new }
 
-      rule(:left_square_bracket) { str("[") >> spaces? }
-      rule(:right_square_bracket) { spaces? >> str("]") }
-      rule(:comma) { spaces? >> str(",") >> spaces? }
+      rule(:left_square_bracket) { str("[") }
+      rule(:right_square_bracket) { str("]") }
+      rule(:comma) { str(",") }
 
       rule(:space) { str(" ") }
       rule(:newline) { str("\n") }
@@ -14,12 +14,14 @@ class Template
 
       rule(:list) do
         (
-          left_square_bracket.ignore >>
+          left_square_bracket.ignore >> spaces?.ignore >>
             (
               modifier.as(:first) >>
-                (comma >> modifier).repeat(1).as(:others).maybe >>
-                comma.maybe
-            ).maybe >> right_square_bracket.ignore
+                (spaces? >> comma >> spaces? >> modifier)
+                  .repeat(1)
+                  .as(:others)
+                  .maybe >> spaces? >> comma.maybe >> spaces?
+            ).maybe >> spaces?.ignore >> right_square_bracket.ignore
         ).as(:list)
       end
 

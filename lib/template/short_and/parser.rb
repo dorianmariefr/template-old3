@@ -15,7 +15,13 @@ class Template
 
       rule(:short_and) do
         (
-          comparaison.as(:left) >> spaces? >> operator.as(:operator) >> spaces? >> comparaison.as(:right)
+          comparaison.as(:first) >>
+            (
+                spaces? >> operator.as(:operator) >> spaces? >>
+                  comparaison.as(:right)
+              )
+              .repeat(1)
+              .as(:others)
         ).as(:short_and) | comparaison
       end
       root(:short_and)

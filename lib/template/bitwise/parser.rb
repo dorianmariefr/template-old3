@@ -20,8 +20,10 @@ class Template
 
       rule(:bitwise) do
         (
-          plus.as(:left) >> spaces? >> operator.as(:operator) >> spaces? >>
-            plus.as(:right)
+          plus.as(:first) >>
+            (spaces? >> operator.as(:operator) >> spaces? >> plus.as(:other))
+              .repeat(1)
+              .as(:others)
         ).as(:bitwise) | plus
       end
       root(:bitwise)

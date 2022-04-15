@@ -11,8 +11,7 @@ class Template
       rule(:range) do
         (
           short_and.as(:left) >> operator >> short_and.as(:right) |
-          operator >> short_and.as(:right) |
-          short_and.as(:left) >> operator
+            operator >> short_and.as(:right) | short_and.as(:left) >> operator
         ).as(:range) | short_and
       end
       root(:range)

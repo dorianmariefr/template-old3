@@ -12,7 +12,8 @@ class Template
 
       rule(:rescue_statement) do
         (
-          ternary.as(:left) >> spaces? >> rescue_keyword >> spaces? >> rescue_statement.as(:right)
+          ternary.as(:left) >> spaces? >> rescue_keyword >> spaces? >>
+            rescue_statement.as(:right)
         ).as(:rescue) | ternary
       end
 
